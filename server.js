@@ -9,7 +9,7 @@ import {
 } from 'firebase/storage'
 import { doc, setDoc, getFirestore } from 'firebase/firestore'
 import fs from 'fs'
-import pdf from 'pdf-parse'
+/* import pdf from 'pdf-parse' */
 import fileUpload from 'express-fileupload'
 import cors from 'cors'
 import bodyParser from 'body-parser'
@@ -47,13 +47,17 @@ app.use(morgan('dev'))
 function getTextFromPDF(path) {
 	let buffer = fs.readFileSync(path)
 	let result
-	pdf(buffer)
-		.then(data => {
-			result = data
-		})
-		.catch(err => {
-			console.log(err)
-		})
+	/* try {
+		pdf(buffer)
+			.then(data => {
+				result = data
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	} catch (err) {
+		console.log(err)
+	} */
 	return result
 }
 
@@ -82,13 +86,13 @@ app.post('/uploadFile', async (req, res) => {
 app.post('/uploadFileIndex', async (req, res) => {
 	let path = req.query.path.replace(/\\/g, '\\\\')
 	let filename = req.query.filename
-	try {
+	/* try {
 		await setDoc(doc(db, 'pdfs', filename), {
 			content: getTextFromPDF(path),
 		})
 	} catch (err) {
 		console.log(err)
-	}
+	} */
 })
 
 async function fetchFilenames() {
